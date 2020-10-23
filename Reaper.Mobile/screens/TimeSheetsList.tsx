@@ -2,8 +2,6 @@ import * as React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 
 import { Row, Separator } from '../components/Row';
-import { TimeSheetsParamList, TimeSheet } from '../types';
-import { NavigationProp } from '@react-navigation/native';
 import { TimeSheetsScreenProps } from './TimeSheetsScreen';
 
 type TimeSheetsListProps = TimeSheetsScreenProps;
