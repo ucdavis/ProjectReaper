@@ -1,5 +1,3 @@
-import { Duration } from 'date-fns';
-
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -7,7 +5,7 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Home: undefined;
-  TimeSheets: { timeSheets: TimeSheet[] };
+  TimeSheets: TimeSheetsParamList;
 };
 
 export type HomeParamList = {

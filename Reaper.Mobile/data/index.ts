@@ -40,7 +40,7 @@ export const locations: Location[] = [
 ];
 
 export const projects: Project[] = [
-  { id: 0, name: "56443", description: "project 0", locations: [ locations[0], locations[1], locations[2] ] },
+  { id: 0, name: "56442", description: "project 0", locations: [ locations[0], locations[1], locations[2] ] },
   { id: 1, name: "56444", description: "project 1", locations: [ locations[3], locations[4] ] },
   { id: 2, name: "56445", description: "project 2", locations: [ locations[5], locations[6], locations[7] ] },
 ];
