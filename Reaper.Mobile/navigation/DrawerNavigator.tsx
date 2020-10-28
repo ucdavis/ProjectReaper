@@ -7,10 +7,10 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
 import TimeSheetsScreen from '../screens/TimeSheetsScreen';
-import { DrawerParamList, HomeParamList, TimeSheetsParamList, TimeSheet } from '../types';
+import { DrawerParamList, HomeParamList } from '../types';
 
-import { timeSheets } from '../data';
 import Sidebar from './Sidebar';
+import { ScreenHeader } from '../components/ScreenHeader';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -21,7 +21,7 @@ export function DrawerNavigator() {
     <Drawer.Navigator
       initialRouteName="Home"
       drawerContentOptions={{ activeTintColor: Colors[colorScheme].tint }}
-      drawerContent={(props) => <Sidebar {...props}/>}>
+      drawerContent={() => <Sidebar />}>
       <Drawer.Screen
         name="Home"
         component={HomeNavigator}
@@ -56,13 +56,13 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home Title' }}
+        options={{ headerTitle: props => <ScreenHeader name="Home" /> }}
       />
     </HomeStack.Navigator>
   );
 }
 
-const TimeSheetsStack = createStackNavigator<TimeSheetsParamList>();
+const TimeSheetsStack = createStackNavigator();
 
 function TimeSheetsNavigator() {
   return (
@@ -70,8 +70,7 @@ function TimeSheetsNavigator() {
       <TimeSheetsStack.Screen
         name="TimeSheetsScreen"
         component={TimeSheetsScreen}
-        options={{ headerTitle: 'TimeSheets Title' }}
-        initialParams={ { timeSheets } }
+        options={{ headerTitle: props => <ScreenHeader name="TimeSheets" /> }}
       ></TimeSheetsStack.Screen>
     </TimeSheetsStack.Navigator>
   );

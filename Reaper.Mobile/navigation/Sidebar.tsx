@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { FlatList, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 import { View } from '../components/Themed';
-import { useState } from '@hookstate/core';
 import { Ionicons } from '@expo/vector-icons';
-import { DrawerContentComponentProps, DrawerContentOptions } from '@react-navigation/drawer';
-import { NavigationState } from '@react-navigation/native';
-import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import { useNavigation } from '@react-navigation/native';
 
 type ItemProps = {
-  navigation: DrawerNavigationHelpers;
   item: RouteData
 }
 
@@ -18,7 +14,9 @@ type RouteData = {
 };
 
 function Item(props: ItemProps) {
-  const { item, navigation } = props
+  const { item } = props;
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity style={styles.listItem} onPress={()=>navigation.navigate(item.name)}>
       <Ionicons name={item.icon} size={32} />
@@ -27,14 +25,12 @@ function Item(props: ItemProps) {
   );
 }
 
-export default function Sidebar(props: DrawerContentComponentProps<DrawerContentOptions>) {
+export default function Sidebar() {
 
-  const { navigation } = props;
-
-  const routes = useState<RouteData[]>([
+  const routes: RouteData[] = [
     { name: "Home", icon: "ios-home" },
     { name: "TimeSheets", icon: "ios-settings" },
-  ]);
+  ];
 
   return (
     <View style={styles.container}>
@@ -44,8 +40,8 @@ export default function Sidebar(props: DrawerContentComponentProps<DrawerContent
       <View style={styles.sidebarDivider}></View>
       <FlatList<RouteData>
         style={{width:"100%",marginLeft:30}}
-        data={routes.get()}
-        renderItem={({ item }) => <Item  item={item} navigation={navigation}/>}
+        data={routes}
+        renderItem={({ item }) => <Item  item={item} />}
         keyExtractor={(item) => item.name}
       />
     </View>

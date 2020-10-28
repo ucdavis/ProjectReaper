@@ -1,14 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { Row, Separator } from '../components/Row';
-import { TimeSheetsScreenProps } from './TimeSheetsScreen';
+import { timeSheets } from '../data';
 
-type TimeSheetsListProps = TimeSheetsScreenProps;
-
-export default function TimeSheetsList(props: TimeSheetsListProps) {
-  const { navigation, route } = props;
-  const { timeSheets } = route.params;
+export default function TimeSheetsList() {
+  const navigation = useNavigation();
 
   return (
     <FlatList

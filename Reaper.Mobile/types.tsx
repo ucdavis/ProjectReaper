@@ -5,16 +5,11 @@ export type RootStackParamList = {
 
 export type DrawerParamList = {
   Home: undefined;
-  TimeSheets: TimeSheetsParamList;
+  TimeSheets: undefined;
 };
 
 export type HomeParamList = {
   HomeScreen: undefined;
-};
-
-export type TimeSheetsParamList = {
-  TimeSheetsScreen: { timeSheets: TimeSheet[] };
-  TimeSheetDetails: { timeSheet: TimeSheet };
 };
 
 export type ActionType  = {
