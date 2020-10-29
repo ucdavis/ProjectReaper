@@ -10,6 +10,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import { ActivityForm } from "./ActivityForm";
 import "./ActivitySection.css";
 
 export const ActivitySection = () => {
@@ -79,6 +80,7 @@ export const ActivitySection = () => {
           </Row>
         </Container>
       </div>
+      <ActivityForm />
     </Container>
   );
 };

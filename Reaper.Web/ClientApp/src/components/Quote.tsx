@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Activity } from "../types";
-import { ActivityForm } from "./ActivityForm";
 import { ActivitySection } from "./ActivitySection";
 
 export const Quote = () => {
