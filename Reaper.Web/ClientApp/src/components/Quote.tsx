@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Activity } from "../types";
+import { ActivityForm } from "./ActivityForm";
+import { ActivitySection } from "./ActivitySection";
 
 export const Quote = () => {
-    // this variable will be modified as the sub-components update
-    const activities: Activity[] = [];
+  // this variable will be modified as the sub-components update
+  const activities: Activity[] = [];
 
   return (
     <div>
@@ -16,7 +18,7 @@ export const Quote = () => {
         <p>
           <em>
             Note, types are already in the types.ts file, but feel free to add
-            to them if needed.  
+            to them if needed.
           </em>
         </p>
 
@@ -35,11 +37,13 @@ export const Quote = () => {
             pulled via an API
           </li>
           <li>
-            Totals at the bottom are calculated by going through the activities variable and adding things up
+            Totals at the bottom are calculated by going through the activities
+            variable and adding things up
           </li>
         </ol>
       </p>
       <button>Add Activity</button>
+      <ActivitySection />
     </div>
   );
 };
