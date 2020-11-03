@@ -1,64 +1,44 @@
-import React, { useEffect, useState } from "react";
-import {
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-  Col,
-} from "reactstrap";
+import React, { useState } from "react";
+import { Button, Col, Row } from "reactstrap";
+import { ActivityActionItem } from "./ActivityActionItem";
 
-export const ActivityAction = () => {
-  const [time, setTime] = useState<number>(0);
-  const [rate, setRate] = useState<number>(0);
-  const [total, setTotal] = useState<number>(0);
+interface IProps {
+  actionType: string;
+}
 
-  useEffect(() => {
-    const totalAmount = time * rate;
-    setTotal(totalAmount);
-  }, [time, rate]);
+export const ActivityAction = (props: IProps) => {
+  const [actionItems, setActionItems] = useState<JSX.Element[]>([
+    <ActivityActionItem actionType={props.actionType} />,
+  ]);
+
+  const addAction = () => {
+    setActionItems([
+      ...actionItems,
+      <ActivityActionItem actionType={props.actionType} />,
+    ]);
+  };
 
   return (
-    <Row>
-      <Col xs="6">
-        <FormGroup>
-          <Input type="select" name="select">
-            <option>Hello</option>
-            <option>Bye</option>
-          </Input>
-        </FormGroup>
-      </Col>
+    <div>
+      <Row>
+        <Col xs="6">
+          <h6>{props.actionType}</h6>
+        </Col>
+        <Col xs="2">
+          <h6>Time</h6>
+        </Col>
+        <Col xs="2">
+          <h6>Rate</h6>
+        </Col>
+        <Col xs="2">
+          <h6>Total</h6>
+        </Col>
+      </Row>
 
-      <Col xs="2">
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>hr</InputGroupText>
-          </InputGroupAddon>
-          <Input
-            type="number"
-            id="time"
-            onChange={(e) => setTime(parseInt(e.target.value))}
-            value={time}
-          />
-        </InputGroup>
-      </Col>
-
-      <Col xs="2">
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>$</InputGroupText>
-          </InputGroupAddon>
-          <Input
-            type="number"
-            id="rate"
-            onChange={(e) => setRate(parseInt(e.target.value))}
-            value={rate}
-          />
-        </InputGroup>
-      </Col>
-
-      <Col xs="2">${total}</Col>
-    </Row>
+      {actionItems.map((item) => item)}
+      <Button color="link" onClick={addAction}>
+        Add {props.actionType}
+      </Button>
+    </div>
   );
 };
