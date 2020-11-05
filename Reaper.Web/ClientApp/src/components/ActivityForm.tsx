@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Form } from "reactstrap";
+import { Col, Form, Row } from "reactstrap";
 import { ActivityActionList } from "./ActivityActionList";
+import { ActivityTotal } from "./ActivityTotal";
+import "./ActivityForm.css";
 
 export const ActivityForm = () => {
   const [laborTotal, setLaborTotal] = useState<number>(0);
@@ -8,7 +10,7 @@ export const ActivityForm = () => {
   const [otherTotal, setOtherTotal] = useState<number>(0);
 
   return (
-    <div>
+    <div id="activityForm">
       <h5>Apple Harvest</h5>
       <hr />
       <Form>
@@ -22,10 +24,20 @@ export const ActivityForm = () => {
         />
       </Form>
 
-      <div>
-        <div>{laborTotal}</div>
-        <div>{equipmentTotal}</div>
-        <div>{otherTotal}</div>
+      <div id="total">
+        <h6>Project Totals</h6>
+        <hr id="break" />
+        <ActivityTotal costName="Labor" cost={laborTotal} />
+        <ActivityTotal costName="Equipment" cost={equipmentTotal} />
+        <ActivityTotal costName="Materials / Other" cost={otherTotal} />
+        <Row>
+          <Col xs="10" sm="10">
+            <h6>Total Cost</h6>
+          </Col>
+          <Col xs="2" sm="2">
+            ${laborTotal}
+          </Col>
+        </Row>
       </div>
     </div>
   );
