@@ -4,6 +4,7 @@ export type RootStackParamList = {
 };
 
 export type DrawerParamList = {
+  SignIn: undefined;
   Home: undefined;
   TimeSheets: undefined;
 };
