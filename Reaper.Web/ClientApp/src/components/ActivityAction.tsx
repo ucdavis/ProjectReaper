@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Button, Col, Row } from "reactstrap";
 import { ActivityActionItem } from "./ActivityActionItem";
 
 interface IProps {
+  activityTotal: number;
   actionType: string;
+  activityTotalChange: Dispatch<SetStateAction<number>>;
 }
 
 export const ActivityAction = (props: IProps) => {
   const [actionItems, setActionItems] = useState<JSX.Element[]>([
-    <ActivityActionItem actionType={props.actionType} />,
+    <ActivityActionItem
+      activityTotal={props.activityTotal}
+      changeTotal={props.activityTotalChange}
+      actionType={props.actionType}
+    />,
   ]);
 
   const addAction = () => {
     setActionItems([
       ...actionItems,
-      <ActivityActionItem actionType={props.actionType} />,
+      <ActivityActionItem
+        activityTotal={props.activityTotal}
+        changeTotal={props.activityTotalChange}
+        actionType={props.actionType}
+      />,
     ]);
   };
 
