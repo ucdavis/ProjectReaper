@@ -33,8 +33,6 @@ export const ActivitySection = () => {
     },
   ]);
 
-  console.log(workItems)
-
   return (
     <Container fluid id="activityContainer">
       {/* Header */}
