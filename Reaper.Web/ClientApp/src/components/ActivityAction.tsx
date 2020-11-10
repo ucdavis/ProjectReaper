@@ -39,7 +39,7 @@ export const ActivityAction = (props: IProps) => {
       </Row>
 
       {props.fields.map((field) => (
-        <ActivityActionItem actionType={field.type} />
+        <ActivityActionItem action={field} workItems={props.workItems} adjustWorkItems={props.adjustWorkItems} />
       ))}
 
       <Button color="link" onClick={() => addAction(props.actionType)}>
