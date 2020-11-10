@@ -16,11 +16,12 @@ export type Action = {
 };
 
 export type WorkItem = {
-  id: string;
-  action: Action;
+  id?: string;
+  type: string;
+  rate: number;
   quantity: number;
 };
 
 export type Activity = {
   workItems: WorkItem[];
-}
+};

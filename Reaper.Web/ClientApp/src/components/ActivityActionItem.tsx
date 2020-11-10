@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormGroup,
   Input,
@@ -11,8 +11,6 @@ import {
 
 interface IProps {
   actionType: string;
-  activityTotal: number;
-  changeTotal: Dispatch<SetStateAction<number>>;
 }
 
 export const ActivityActionItem = (props: IProps) => {
@@ -22,9 +20,7 @@ export const ActivityActionItem = (props: IProps) => {
 
   useEffect(() => {
     const totalAmount = units * rate;
-    const activityTotal = props.activityTotal + totalAmount;
     setTotal(totalAmount);
-    props.changeTotal(activityTotal);
   }, [units, rate]);
 
   return (
@@ -32,7 +28,7 @@ export const ActivityActionItem = (props: IProps) => {
       <Row>
         <Col xs="6">
           <FormGroup>
-            {props.actionType == "Other" ? (
+            {props.actionType == "other" ? (
               <Input />
             ) : (
               <Input type="select" name="select">

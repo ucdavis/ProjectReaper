@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -10,10 +10,31 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import { WorkItem } from "../types";
 import { ActivityForm } from "./ActivityForm";
 import "./ActivitySection.css";
 
 export const ActivitySection = () => {
+  const [workItems, setWorkItems] = useState<WorkItem[]>([
+    {
+      type: "labor",
+      quantity: 0,
+      rate: 0,
+    },
+    {
+      type: "equipment",
+      quantity: 0,
+      rate: 0,
+    },
+    {
+      type: "other",
+      quantity: 0,
+      rate: 0,
+    },
+  ]);
+
+  console.log(workItems)
+
   return (
     <Container fluid id="activityContainer">
       {/* Header */}
@@ -80,7 +101,7 @@ export const ActivitySection = () => {
           </Row>
         </Container>
       </div>
-      <ActivityForm />
+      <ActivityForm workItems={workItems} adjustWorkItems={setWorkItems} />
     </Container>
   );
 };

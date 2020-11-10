@@ -1,34 +1,48 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ActivityAction } from "./ActivityAction";
+import { WorkItem } from "../types";
 
 interface IProps {
-  laborTotal: number;
-  equipmentTotal: number;
-  otherTotal: number;
-  laborChange: Dispatch<SetStateAction<number>>;
-  equipmentChange: Dispatch<SetStateAction<number>>;
-  otherChange: Dispatch<SetStateAction<number>>;
+  workItems: WorkItem[];
+  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
 }
 
 export const ActivityActionList = (props: IProps) => {
+  let laborItems: WorkItem[] = [];
+  let equipmentItems: WorkItem[] = [];
+  let otherItems: WorkItem[] = [];
+
+  props.workItems.map((workItem) => {
+    if (workItem.type === "labor") {
+      laborItems.push(workItem);
+    } else if (workItem.type === "equipment") {
+      equipmentItems.push(workItem);
+    } else if (workItem.type === "other") {
+      otherItems.push(workItem);
+    }
+  });
+
   return (
     <div>
       <ActivityAction
-        actionType="Labor"
-        activityTotal={props.laborTotal}
-        activityTotalChange={props.laborChange}
+        actionType="labor"
+        fields={laborItems}
+        workItems={props.workItems}
+        adjustWorkItems={props.adjustWorkItems}
       />
       <br />
       <ActivityAction
-        actionType="Equipment"
-        activityTotal={props.equipmentTotal}
-        activityTotalChange={props.equipmentChange}
+        actionType="equipment"
+        fields={equipmentItems}
+        workItems={props.workItems}
+        adjustWorkItems={props.adjustWorkItems}
       />
       <br />
       <ActivityAction
-        actionType="Other"
-        activityTotal={props.otherTotal}
-        activityTotalChange={props.otherChange}
+        actionType="other"
+        fields={otherItems}
+        workItems={props.workItems}
+        adjustWorkItems={props.adjustWorkItems}
       />
       <br />
     </div>
