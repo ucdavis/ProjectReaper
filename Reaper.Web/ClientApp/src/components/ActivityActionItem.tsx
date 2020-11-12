@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   FormGroup,
   Input,
@@ -8,9 +8,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { WorkItem } from "../types";
 
 interface IProps {
-  actionType: string;
+  action: WorkItem;
+  workItems: WorkItem[];
+  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
 }
 
 export const ActivityActionItem = (props: IProps) => {
@@ -19,8 +22,15 @@ export const ActivityActionItem = (props: IProps) => {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
+    const targetIndex = props.workItems.findIndex(
+      (currAction) => currAction === props.action
+    );
     const totalAmount = units * rate;
+    let workItemsCopy = [...props.workItems];
+    workItemsCopy[targetIndex].rate = rate;
+    workItemsCopy[targetIndex].quantity = units;
     setTotal(totalAmount);
+    props.adjustWorkItems(workItemsCopy);
   }, [units, rate]);
 
   return (
@@ -28,7 +38,7 @@ export const ActivityActionItem = (props: IProps) => {
       <Row>
         <Col xs="6">
           <FormGroup>
-            {props.actionType == "Other" ? (
+            {props.action.type == "other" ? (
               <Input />
             ) : (
               <Input type="select" name="select">
@@ -47,7 +57,11 @@ export const ActivityActionItem = (props: IProps) => {
             <Input
               type="number"
               id="units"
-              onChange={(e) => setUnits(parseInt(e.target.value))}
+              onChange={(e) =>
+                e.target.value
+                  ? setUnits(parseInt(e.target.value))
+                  : setUnits(0)
+              }
               value={units}
             />
           </InputGroup>
@@ -61,7 +75,9 @@ export const ActivityActionItem = (props: IProps) => {
             <Input
               type="number"
               id="rate"
-              onChange={(e) => setRate(parseInt(e.target.value))}
+              onChange={(e) =>
+                e.target.value ? setRate(parseInt(e.target.value)) : setRate(0)
+              }
               value={rate}
             />
           </InputGroup>
