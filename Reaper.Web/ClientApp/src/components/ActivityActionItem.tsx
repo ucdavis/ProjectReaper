@@ -8,12 +8,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { WorkItem } from "../types";
+import { Activity, WorkItem } from "../types";
 
 interface IProps {
   action: WorkItem;
-  workItems: WorkItem[];
-  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
+  activity: Activity;
+  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityActionItem = (props: IProps) => {
@@ -22,15 +22,22 @@ export const ActivityActionItem = (props: IProps) => {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    const targetIndex = props.workItems.findIndex(
-      (currAction) => currAction === props.action
-    );
+    props.adjustWorkItems((prevActivities) => {
+      let updatedActivities = [...prevActivities];
+      const actionIndex = prevActivities.findIndex(
+        (currActivity) => currActivity === props.activity
+      );
+      const workItemIndex = updatedActivities[actionIndex].workItems.findIndex(
+        (currAction) => currAction === props.action
+      );
+      updatedActivities[actionIndex].workItems[workItemIndex].rate = rate;
+      updatedActivities[actionIndex].workItems[workItemIndex].quantity = units;
+      
+      return updatedActivities;
+    });
+
     const totalAmount = units * rate;
-    let workItemsCopy = [...props.workItems];
-    workItemsCopy[targetIndex].rate = rate;
-    workItemsCopy[targetIndex].quantity = units;
     setTotal(totalAmount);
-    props.adjustWorkItems(workItemsCopy);
   }, [units, rate]);
 
   return (

@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Col, Form, Row } from "reactstrap";
 import { ActivityActionList } from "./ActivityActionList";
 import { ActivityTotal } from "./ActivityTotal";
-import { WorkItem } from "../types";
+import { Activity } from "../types";
 import "./ActivityForm.css";
 
 interface IProps {
-  workItems: WorkItem[];
-  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
+  activity: Activity;
+  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityForm = (props: IProps) => {
@@ -16,7 +16,7 @@ export const ActivityForm = (props: IProps) => {
   let otherTotal = 0;
   let activityTotal = 0;
 
-  props.workItems.map((workItem) => {
+  props.activity.workItems.map((workItem) => {
     const total = workItem.rate * workItem.quantity;
     if (workItem.type === "labor") {
       laborTotal += total;
@@ -35,7 +35,7 @@ export const ActivityForm = (props: IProps) => {
       <hr />
       <Form>
         <ActivityActionList
-          workItems={props.workItems}
+          activity={props.activity}
           adjustWorkItems={props.adjustWorkItems}
         />
       </Form>
