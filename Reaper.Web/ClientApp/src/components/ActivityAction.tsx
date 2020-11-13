@@ -7,7 +7,7 @@ interface IProps {
   actionType: string;
   fields: WorkItem[];
   activity: Activity;
-  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityAction = (props: IProps) => {
@@ -18,7 +18,7 @@ export const ActivityAction = (props: IProps) => {
       rate: 0,
     };
 
-    props.adjustWorkItems((prevActivities) => {
+    props.adjustActivity((prevActivities) => {
       const targetIndex = prevActivities.findIndex(
         (currActivity) => currActivity === props.activity
       );
@@ -49,7 +49,7 @@ export const ActivityAction = (props: IProps) => {
         <ActivityActionItem
           action={field}
           activity={props.activity}
-          adjustWorkItems={props.adjustWorkItems}
+          adjustActivity={props.adjustActivity}
         />
       ))}
 

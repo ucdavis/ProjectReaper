@@ -5,6 +5,7 @@ import { ActivitySection } from "./ActivitySection";
 export const Quote = () => {
   // this variable will be modified as the sub-components update
   const [activities, setActivities] = useState<Activity[]>([]);
+
   const addActivity = () => {
     const newActivity: Activity = {
       workItems: [
@@ -31,7 +32,10 @@ export const Quote = () => {
 
   const renderActivities = () => {
     return activities.map((activity) => (
-      <ActivitySection activity={activity} adjustActivity={setActivities} />
+      <ActivitySection
+        activity={activity}
+        adjustActivity={setActivities}
+      />
     ));
   };
 

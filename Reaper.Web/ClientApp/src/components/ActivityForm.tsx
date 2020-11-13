@@ -7,7 +7,8 @@ import "./ActivityForm.css";
 
 interface IProps {
   activity: Activity;
-  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
+  acreCost: number;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityForm = (props: IProps) => {
@@ -27,7 +28,7 @@ export const ActivityForm = (props: IProps) => {
     }
   });
 
-  activityTotal = laborTotal + equipmentTotal + otherTotal;
+  activityTotal = laborTotal + equipmentTotal + otherTotal + props.acreCost;
 
   return (
     <div id="activityForm">
@@ -36,13 +37,14 @@ export const ActivityForm = (props: IProps) => {
       <Form>
         <ActivityActionList
           activity={props.activity}
-          adjustWorkItems={props.adjustWorkItems}
+          adjustActivity={props.adjustActivity}
         />
       </Form>
 
       <div id="total">
         <h6>Project Totals</h6>
         <hr id="break" />
+        <ActivityTotal costName="Acre Fees" cost={props.acreCost} />
         <ActivityTotal costName="Labor" cost={laborTotal} />
         <ActivityTotal costName="Equipment" cost={equipmentTotal} />
         <ActivityTotal costName="Materials / Other" cost={otherTotal} />

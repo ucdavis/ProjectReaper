@@ -4,7 +4,7 @@ import { Activity, WorkItem } from "../types";
 
 interface IProps {
   activity: Activity;
-  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityActionList = (props: IProps) => {
@@ -28,21 +28,21 @@ export const ActivityActionList = (props: IProps) => {
         actionType="labor"
         fields={laborItems}
         activity={props.activity}
-        adjustWorkItems={props.adjustWorkItems}
+        adjustActivity={props.adjustActivity}
       />
       <br />
       <ActivityAction
         actionType="equipment"
         fields={equipmentItems}
         activity={props.activity}
-        adjustWorkItems={props.adjustWorkItems}
+        adjustActivity={props.adjustActivity}
       />
       <br />
       <ActivityAction
         actionType="other"
         fields={otherItems}
         activity={props.activity}
-        adjustWorkItems={props.adjustWorkItems}
+        adjustActivity={props.adjustActivity}
       />
       <br />
     </div>

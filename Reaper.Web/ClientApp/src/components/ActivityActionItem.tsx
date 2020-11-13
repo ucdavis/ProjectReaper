@@ -13,7 +13,7 @@ import { Activity, WorkItem } from "../types";
 interface IProps {
   action: WorkItem;
   activity: Activity;
-  adjustWorkItems: Dispatch<SetStateAction<Activity[]>>;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityActionItem = (props: IProps) => {
@@ -22,7 +22,7 @@ export const ActivityActionItem = (props: IProps) => {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    props.adjustWorkItems((prevActivities) => {
+    props.adjustActivity((prevActivities) => {
       let updatedActivities = [...prevActivities];
       const actionIndex = prevActivities.findIndex(
         (currActivity) => currActivity === props.activity
@@ -32,7 +32,7 @@ export const ActivityActionItem = (props: IProps) => {
       );
       updatedActivities[actionIndex].workItems[workItemIndex].rate = rate;
       updatedActivities[actionIndex].workItems[workItemIndex].quantity = units;
-      
+
       return updatedActivities;
     });
 
@@ -69,7 +69,6 @@ export const ActivityActionItem = (props: IProps) => {
                   ? setUnits(parseInt(e.target.value))
                   : setUnits(0)
               }
-              value={units}
             />
           </InputGroup>
         </Col>
@@ -85,7 +84,6 @@ export const ActivityActionItem = (props: IProps) => {
               onChange={(e) =>
                 e.target.value ? setRate(parseInt(e.target.value)) : setRate(0)
               }
-              value={rate}
             />
           </InputGroup>
         </Col>

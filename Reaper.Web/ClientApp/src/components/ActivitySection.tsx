@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -20,6 +20,15 @@ interface IProps {
 }
 
 export const ActivitySection = (props: IProps) => {
+  const [acreNumber, setAcreNumber] = useState<number>(0);
+  const [acreRate, setAcreRate] = useState<number>(0);
+  const [acreCost, setAcreCost] = useState<number>(0);
+
+  useEffect(() => {
+    const newTotal = acreNumber * acreRate;
+    setAcreCost(newTotal);
+  });
+
   return (
     <Container fluid id="activityContainer">
       {/* Header */}
@@ -54,7 +63,15 @@ export const ActivitySection = (props: IProps) => {
                   <Label for="acres">
                     <h6>Number of Acres</h6>
                   </Label>
-                  <Input type="text" id="acres" />
+                  <Input
+                    type="number"
+                    id="acres"
+                    onChange={(e) =>
+                      e.target.value
+                        ? setAcreNumber(parseInt(e.target.value))
+                        : setAcreNumber(0)
+                    }
+                  />
                 </Col>
                 <Col xs="4">
                   <Label for="rate">
@@ -64,11 +81,20 @@ export const ActivitySection = (props: IProps) => {
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
-                    <Input type="text" id="rate" />
+                    <Input
+                      type="number"
+                      id="rate"
+                      onChange={(e) =>
+                        e.target.value
+                          ? setAcreRate(parseInt(e.target.value))
+                          : setAcreRate(0)
+                      }
+                    />
                   </InputGroup>
                 </Col>
                 <Col xs="4">
                   <h6>Total Acreage Fee</h6>
+                  <div>{acreCost}</div>
                 </Col>
               </Row>
               <br />
@@ -88,7 +114,8 @@ export const ActivitySection = (props: IProps) => {
       </div>
       <ActivityForm
         activity={props.activity}
-        adjustWorkItems={props.adjustActivity}
+        acreCost={acreCost}
+        adjustActivity={props.adjustActivity}
       />
     </Container>
   );
