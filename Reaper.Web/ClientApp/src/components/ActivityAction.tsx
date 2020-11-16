@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Button, Col, Row } from "reactstrap";
 import { ActivityActionItem } from "./ActivityActionItem";
-import { WorkItem } from "../types";
+import { Activity, WorkItem } from "../types";
 
 interface IProps {
   actionType: string;
-  workItems: WorkItem[];
   fields: WorkItem[];
-  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
+  activity: Activity;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityAction = (props: IProps) => {
@@ -18,7 +18,14 @@ export const ActivityAction = (props: IProps) => {
       rate: 0,
     };
 
-    props.adjustWorkItems([...props.workItems, newAction]);
+    props.adjustActivity((prevActivities) => {
+      const targetIndex = prevActivities.findIndex(
+        (currActivity) => currActivity === props.activity
+      );
+      const newActivities = [...prevActivities];
+      newActivities[targetIndex].workItems.push(newAction);
+      return newActivities;
+    });
   };
 
   return (
@@ -39,7 +46,11 @@ export const ActivityAction = (props: IProps) => {
       </Row>
 
       {props.fields.map((field) => (
-        <ActivityActionItem action={field} workItems={props.workItems} adjustWorkItems={props.adjustWorkItems} />
+        <ActivityActionItem
+          action={field}
+          activity={props.activity}
+          adjustActivity={props.adjustActivity}
+        />
       ))}
 
       <Button color="link" onClick={() => addAction(props.actionType)}>

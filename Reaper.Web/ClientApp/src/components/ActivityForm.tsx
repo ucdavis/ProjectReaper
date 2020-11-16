@@ -2,12 +2,13 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Col, Form, Row } from "reactstrap";
 import { ActivityActionList } from "./ActivityActionList";
 import { ActivityTotal } from "./ActivityTotal";
-import { WorkItem } from "../types";
+import { Activity } from "../types";
 import "./ActivityForm.css";
 
 interface IProps {
-  workItems: WorkItem[];
-  adjustWorkItems: Dispatch<SetStateAction<WorkItem[]>>;
+  activity: Activity;
+  acreCost: number;
+  adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
 
 export const ActivityForm = (props: IProps) => {
@@ -16,7 +17,7 @@ export const ActivityForm = (props: IProps) => {
   let otherTotal = 0;
   let activityTotal = 0;
 
-  props.workItems.map((workItem) => {
+  props.activity.workItems.map((workItem) => {
     const total = workItem.rate * workItem.quantity;
     if (workItem.type === "labor") {
       laborTotal += total;
@@ -27,7 +28,7 @@ export const ActivityForm = (props: IProps) => {
     }
   });
 
-  activityTotal = laborTotal + equipmentTotal + otherTotal;
+  activityTotal = laborTotal + equipmentTotal + otherTotal + props.acreCost;
 
   return (
     <div id="activityForm">
@@ -35,14 +36,15 @@ export const ActivityForm = (props: IProps) => {
       <hr />
       <Form>
         <ActivityActionList
-          workItems={props.workItems}
-          adjustWorkItems={props.adjustWorkItems}
+          activity={props.activity}
+          adjustActivity={props.adjustActivity}
         />
       </Form>
 
       <div id="total">
         <h6>Project Totals</h6>
         <hr id="break" />
+        <ActivityTotal costName="Acre Fees" cost={props.acreCost} />
         <ActivityTotal costName="Labor" cost={laborTotal} />
         <ActivityTotal costName="Equipment" cost={equipmentTotal} />
         <ActivityTotal costName="Materials / Other" cost={otherTotal} />
