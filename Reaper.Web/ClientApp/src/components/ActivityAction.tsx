@@ -31,7 +31,7 @@ export const ActivityAction = (props: IProps) => {
   return (
     <div>
       <Row>
-        <Col xs="6">
+        <Col xs="4">
           <h6>{props.actionType}</h6>
         </Col>
         <Col xs="2">

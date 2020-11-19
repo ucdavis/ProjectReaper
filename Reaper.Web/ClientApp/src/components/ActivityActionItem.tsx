@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
+  Button,
   FormGroup,
   Input,
   InputGroup,
@@ -22,28 +23,48 @@ export const ActivityActionItem = (props: IProps) => {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    props.adjustActivity((prevActivities) => {
-      let updatedActivities = [...prevActivities];
-      const actionIndex = prevActivities.findIndex(
-        (currActivity) => currActivity === props.activity
-      );
-      const workItemIndex = updatedActivities[actionIndex].workItems.findIndex(
-        (currAction) => currAction === props.action
-      );
-      updatedActivities[actionIndex].workItems[workItemIndex].rate = rate;
-      updatedActivities[actionIndex].workItems[workItemIndex].quantity = units;
-
-      return updatedActivities;
-    });
-
+    props.adjustActivity((prevActivities) => updateAction(prevActivities));
     const totalAmount = units * rate;
     setTotal(totalAmount);
   }, [units, rate]);
 
+  const deleteAction = (prevActivities: Activity[]) => {
+    let updatedActivities = [...prevActivities];
+    const actionIndex = prevActivities.findIndex(
+      (currActivity) => currActivity === props.activity
+    );
+    const workItemIndex = updatedActivities[actionIndex].workItems.findIndex(
+      (currAction) => currAction === props.action
+    );
+
+    updatedActivities[actionIndex].workItems = updatedActivities[
+      actionIndex
+    ].workItems.filter(
+      (workItem) =>
+        workItem !== updatedActivities[actionIndex].workItems[workItemIndex]
+    );
+
+    return updatedActivities;
+  };
+
+  const updateAction = (prevActivities: Activity[]) => {
+    let updatedActivities = [...prevActivities];
+    const actionIndex = prevActivities.findIndex(
+      (currActivity) => currActivity === props.activity
+    );
+    const workItemIndex = updatedActivities[actionIndex].workItems.findIndex(
+      (currAction) => currAction === props.action
+    );
+    updatedActivities[actionIndex].workItems[workItemIndex].rate = rate;
+    updatedActivities[actionIndex].workItems[workItemIndex].quantity = units;
+
+    return updatedActivities;
+  };
+
   return (
     <div>
       <Row>
-        <Col xs="6">
+        <Col xs="4">
           <FormGroup>
             {props.action.type == "other" ? (
               <Input />
@@ -89,6 +110,19 @@ export const ActivityActionItem = (props: IProps) => {
         </Col>
 
         <Col xs="2">${total}</Col>
+
+        <Col xs="2">
+          <Button
+            color="danger"
+            onClick={() =>
+              props.adjustActivity((prevActivities) =>
+                deleteAction(prevActivities)
+              )
+            }
+          >
+            Delete
+          </Button>
+        </Col>
       </Row>
     </div>
   );
