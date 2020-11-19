@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Col, Form, Row } from "reactstrap";
-import { ActivityActionList } from "./ActivityActionList";
+import { Col, Row } from "reactstrap";
 import { ActivityTotal } from "./ActivityTotal";
+import { ActivityCard } from "./ActivityCard";
 import { Activity } from "../types";
 import "./ActivityForm.css";
 
@@ -34,16 +34,7 @@ export const ActivityForm = (props: IProps) => {
 
   const renderActivities = () => {
     return props.activities.map((activity) => (
-      <div>
-        <h5>Apple Harvest</h5>
-        <hr />
-        <Form>
-          <ActivityActionList
-            activity={activity}
-            adjustActivity={props.adjustActivity}
-          />
-        </Form>
-      </div>
+      <ActivityCard activity={activity} adjustActivity={props.adjustActivity} />
     ));
   };
 
