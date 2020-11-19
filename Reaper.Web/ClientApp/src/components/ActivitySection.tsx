@@ -15,8 +15,9 @@ import { ActivityForm } from "./ActivityForm";
 import "./ActivitySection.css";
 
 interface IProps {
-  activity: Activity;
+  activities: Activity[];
   adjustActivity: Dispatch<SetStateAction<Activity[]>>;
+  addActivity: () => void;
 }
 
 export const ActivitySection = (props: IProps) => {
@@ -45,6 +46,7 @@ export const ActivitySection = (props: IProps) => {
           scrambled it to make a type specimen book.
         </p>
       </div>
+
       {/* Form */}
       <div>
         <h5>Project Details</h5>
@@ -98,10 +100,11 @@ export const ActivitySection = (props: IProps) => {
                 </Col>
               </Row>
               <br />
-              <Button color="success" size="lg">
+              <Button color="success" size="lg" onClick={props.addActivity}>
                 Add Activity
               </Button>
             </Col>
+
             {/* Right Details */}
             <Col xs="6">
               <Label for="projectLocation">Project Location</Label>
@@ -113,7 +116,7 @@ export const ActivitySection = (props: IProps) => {
         </Container>
       </div>
       <ActivityForm
-        activity={props.activity}
+        activities={props.activities}
         acreCost={acreCost}
         adjustActivity={props.adjustActivity}
       />
