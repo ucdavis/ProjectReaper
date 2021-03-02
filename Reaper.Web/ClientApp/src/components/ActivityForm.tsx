@@ -1,12 +1,12 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Col, Form, Row } from "reactstrap";
-import { ActivityActionList } from "./ActivityActionList";
+import { Col, Row } from "reactstrap";
 import { ActivityTotal } from "./ActivityTotal";
+import { ActivityCard } from "./ActivityCard";
 import { Activity } from "../types";
 import "./ActivityForm.css";
 
 interface IProps {
-  activity: Activity;
+  activities: Activity[];
   acreCost: number;
   adjustActivity: Dispatch<SetStateAction<Activity[]>>;
 }
@@ -17,29 +17,30 @@ export const ActivityForm = (props: IProps) => {
   let otherTotal = 0;
   let activityTotal = 0;
 
-  props.activity.workItems.map((workItem) => {
-    const total = workItem.rate * workItem.quantity;
-    if (workItem.type === "labor") {
-      laborTotal += total;
-    } else if (workItem.type === "equipment") {
-      equipmentTotal += total;
-    } else if (workItem.type === "other") {
-      otherTotal += total;
-    }
+  props.activities.map((activity) => {
+    activity.workItems.map((workItem) => {
+      const total = workItem.rate * workItem.quantity;
+      if (workItem.type === "labor") {
+        laborTotal += total;
+      } else if (workItem.type === "equipment") {
+        equipmentTotal += total;
+      } else if (workItem.type === "other") {
+        otherTotal += total;
+      }
+    });
   });
 
   activityTotal = laborTotal + equipmentTotal + otherTotal + props.acreCost;
 
+  const renderActivities = () => {
+    return props.activities.map((activity) => (
+      <ActivityCard activity={activity} adjustActivity={props.adjustActivity} />
+    ));
+  };
+
   return (
     <div id="activityForm">
-      <h5>Apple Harvest</h5>
-      <hr />
-      <Form>
-        <ActivityActionList
-          activity={props.activity}
-          adjustActivity={props.adjustActivity}
-        />
-      </Form>
+      {renderActivities()}
 
       <div id="total">
         <h6>Project Totals</h6>

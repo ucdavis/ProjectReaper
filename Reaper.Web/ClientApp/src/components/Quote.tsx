@@ -3,40 +3,30 @@ import { Activity } from "../types";
 import { ActivitySection } from "./ActivitySection";
 
 export const Quote = () => {
-  // this variable will be modified as the sub-components update
-  const [activities, setActivities] = useState<Activity[]>([]);
-
-  const addActivity = () => {
-    const newActivity: Activity = {
-      workItems: [
-        {
-          type: "labor",
-          quantity: 0,
-          rate: 0,
-        },
-        {
-          type: "equipment",
-          quantity: 0,
-          rate: 0,
-        },
-        {
-          type: "other",
-          quantity: 0,
-          rate: 0,
-        },
-      ],
-    };
-
-    setActivities([...activities, newActivity]);
+  const newActivity: Activity = {
+    workItems: [
+      {
+        type: "labor",
+        quantity: 0,
+        rate: 0,
+      },
+      {
+        type: "equipment",
+        quantity: 0,
+        rate: 0,
+      },
+      {
+        type: "other",
+        quantity: 0,
+        rate: 0,
+      },
+    ],
   };
 
-  const renderActivities = () => {
-    return activities.map((activity) => (
-      <ActivitySection
-        activity={activity}
-        adjustActivity={setActivities}
-      />
-    ));
+  const [activities, setActivities] = useState<Activity[]>([newActivity]);
+
+  const addActivity = () => {
+    setActivities([...activities, newActivity]);
   };
 
   return (
@@ -74,8 +64,11 @@ export const Quote = () => {
           </li>
         </ol>
       </p>
-      <button onClick={addActivity}>Add Activity</button>
-      {renderActivities()}
+      <ActivitySection
+        activities={activities}
+        adjustActivity={setActivities}
+        addActivity={addActivity}
+      />
     </div>
   );
 };
